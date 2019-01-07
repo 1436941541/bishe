@@ -18,13 +18,15 @@ import com.lauren.simplenews.utils.ImageLoaderUtils;
 import com.lauren.simplenews.utils.imageload.TransformationUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * 数据源的适配器
  */
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<NewsBean> dataList = new ArrayList<>();
+    private LinkedList<NewsBean> linkedList = new LinkedList<>();
     //普通布局
     private static final int TYPE_ITEM = 1;
     // 脚布局
@@ -45,9 +47,26 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
     }
 
+    public void setLast(LinkedList<NewsBean> last) {
+        for (NewsBean newsBean:last){
+            linkedList.addLast(newsBean);
+            notifyItemInserted(linkedList.size()-1);
+        }
+    }
 
-    public void setmData(List<NewsBean> mData) {
-        dataList = mData;
+    public void setFirst(LinkedList<NewsBean> first) {
+        for (NewsBean newsBean:first){
+            linkedList.addFirst(newsBean);
+            notifyItemInserted(0);
+        }
+    }
+
+    public LinkedList<NewsBean> getData() {
+        return linkedList;
+    }
+
+    public void setmData(LinkedList<NewsBean> newsBeans) {
+        linkedList = newsBeans;
         notifyDataSetChanged();
     }
 
@@ -70,7 +89,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void onClick(View v) {
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(v, this.getPosition());
+                mOnItemClickListener.onItemClick(v, (Integer) itemView.getTag());
             }
         }
     }
@@ -109,11 +128,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RecyclerViewHolder) {
             RecyclerViewHolder recyclerViewHolder = (RecyclerViewHolder) holder;
-            recyclerViewHolder.tvTitle.setText(dataList.get(position).getTitle());
-            recyclerViewHolder.tvDesc.setText(dataList.get(position).getDigest());
-            recyclerViewHolder.tvSource.setText(dataList.get(position).getSource());
-            ImageLoaderUtils.display(context, recyclerViewHolder.imageView, dataList.get(position).getImgsrc());
-//            Glide.with(context).load().override(100, 80).into(recyclerViewHolder.imageView);
+            recyclerViewHolder.tvTitle.setText(linkedList.get(position).getFirstTitle());
+            recyclerViewHolder.tvDesc.setText(linkedList.get(position).getSecondTitle());
+            recyclerViewHolder.tvSource.setText(linkedList.get(position).getTime());
+            ImageLoaderUtils.display(context, recyclerViewHolder.imageView, linkedList.get(position).getImageUrl());
+            recyclerViewHolder.itemView.setTag(position);
         } else if (holder instanceof FootViewHolder) {
             FootViewHolder footViewHolder = (FootViewHolder) holder;
             switch (loadState) {
@@ -156,7 +175,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return dataList.size() + 1;
+        return linkedList.size() + 1;
     }
 
     /**

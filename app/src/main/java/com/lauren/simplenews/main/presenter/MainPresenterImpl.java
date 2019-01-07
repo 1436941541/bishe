@@ -18,17 +18,21 @@ public class MainPresenterImpl implements MainPresenter {
                 mMainView.switch2News();
                 break;
             case R.id.navigation_item_social:
-                mMainView.switch2Images();
+                mMainView.switch2Social();
                 break;
             case R.id.navigation_item_friend:
-                mMainView.switch2Weather();
+                mMainView.switch2Friend();
                 break;
             case R.id.navigation_item_about:
                 mMainView.switch2About();
                 break;
-            default:
-                mMainView.switch2News();
+            case R.id.navigation_item_search:
+                mMainView.switch2Find();
                 break;
+            case R.id.navigation_item_setting:
+                mMainView.switch2Setting();
+                break;
+            default: break;
         }
     }
 }

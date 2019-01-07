@@ -20,4 +20,5 @@ public class CacheUtils {
         editor.putBoolean(key, true);
         editor.apply();
     }
+
 }

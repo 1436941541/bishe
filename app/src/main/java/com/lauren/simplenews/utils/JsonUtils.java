@@ -3,8 +3,14 @@ package com.lauren.simplenews.utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import com.lauren.simplenews.beans.NewsBean;
+import com.lauren.simplenews.beans.Person;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Description : Json转换工具类
@@ -12,7 +18,13 @@ import java.lang.reflect.Type;
 public class JsonUtils {
 
     private static Gson mGson = new Gson();
-
+    public static LinkedList<NewsBean> getListPersonByGson(String jsonString) {
+        LinkedList<NewsBean> list;
+        Gson gson = new Gson();
+        list = gson.fromJson(jsonString, new TypeToken<LinkedList<NewsBean>>() {
+        }.getType());
+        return list;
+    }
     /**
      * 将对象准换为json字符串
      *

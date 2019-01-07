@@ -20,6 +20,7 @@ import com.lauren.simplenews.utils.ImageLoaderUtils;
 import com.lauren.simplenews.utils.JsonUtils;
 import com.lauren.simplenews.utils.okhttp3.MyOkhttpClient;
 
+import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.io.IOException;
@@ -50,13 +51,12 @@ public class NewsDetailActivity extends AppCompatActivity {
         });
         mNews = (NewsBean) getIntent().getSerializableExtra("news");
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(mNews.getTitle());
-        ImageLoaderUtils.display(getApplicationContext(), (ImageView) findViewById(R.id.ivImage), mNews.getImgsrc());
-        loadNewsDetail(mNews.getDocid());
+        collapsingToolbar.setTitle(mNews.getFirstTitle());
+        ImageLoaderUtils.display(getBaseContext(), (ImageView) findViewById(R.id.ivImage), mNews.getImageUrl());
+        loadNewsDetail(mNews.getNewDetailUrl());
     }
 
-    public void loadNewsDetail(final String docid) {
-        String url = getDetailUrl(docid);
+    public void loadNewsDetail(final String url) {
         MyOkhttpClient.getInstance().asyncGet(url, new MyOkhttpClient.HttpCallBack() {
             @Override
             public void onError(Request request, IOException e) {
@@ -65,39 +65,21 @@ public class NewsDetailActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(Response response, Request request, String result) {
-                NewsDetailBean newsDetailBean = readJsonNewsDetailBeans(result, docid);
-                if (newsDetailBean != null) {
-                    showNewsDetialContent(newsDetailBean.getBody());
-                    mProgressBar.setVisibility(View.GONE);
+                if (response.code() == 200){
+                    showNewsDetialContent(result);
                 }
+//                NewsDetailBean newsDetailBean = readJsonNewsDetailBeans(result, docid);
+//                if (newsDetailBean != null) {
+//                    showNewsDetialContent(newsDetailBean.getBody());
+//                    mProgressBar.setVisibility(View.GONE);
+//                }
             }
         });
     }
 
     public void showNewsDetialContent(String newsDetailContent) {
-        mTVNewsContent.setHtmlFromString(newsDetailContent, new HtmlTextView.LocalImageGetter());
-    }
-
-    public NewsDetailBean readJsonNewsDetailBeans(String res, String docId) {
-        NewsDetailBean newsDetailBean = null;
-        try {
-            JsonParser parser = new JsonParser();
-            JsonObject jsonObj = parser.parse(res).getAsJsonObject();
-            JsonElement jsonElement = jsonObj.get(docId);
-            if (jsonElement == null) {
-                return null;
-            }
-            newsDetailBean = JsonUtils.deserialize(jsonElement.getAsJsonObject(), NewsDetailBean.class);
-        } catch (Exception e) {
-
-        }
-        return newsDetailBean;
-    }
-
-    private String getDetailUrl(String docId) {
-        StringBuffer sb = new StringBuffer(Urls.NEW_DETAIL);
-        sb.append(docId).append(Urls.END_DETAIL_URL);
-        return sb.toString();
+        mTVNewsContent.setHtml(newsDetailContent, new HtmlHttpImageGetter(mTVNewsContent));
+        mProgressBar.setVisibility(View.GONE);
     }
 }
 

@@ -43,19 +43,18 @@ public class MyOkhttpClient {
         private HttpCallBack httpCallBack;
         private Request request;
 
-        public StringCallBack(Request request, HttpCallBack httpCallBack) {
+        private StringCallBack(Request request, HttpCallBack httpCallBack) {
             this.request = request;
             this.httpCallBack = httpCallBack;
         }
 
         @Override
-        public void onFailure(Call call, IOException e) {
-            final IOException fe = e;
+        public void onFailure(Call call, final IOException e) {
             if (httpCallBack != null) {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        httpCallBack.onError(request, fe);
+                        httpCallBack.onError(request, e);
                     }
                 });
             }

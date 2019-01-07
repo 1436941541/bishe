@@ -24,7 +24,8 @@ public abstract class BaseFragment extends Fragment {
 
     protected BaseFragment() {
     }
-
+    //做一些初始化的操作
+    protected abstract void init();
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

@@ -33,12 +33,12 @@ public class MainActivity extends BaseActivity implements MainView {
         setDrawerListener();
         setupDrawerContent(mNavigationView);
         mMainPresenter = new MainPresenterImpl(this);
+        switch2News();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        switch2News();
     }
 
     /**
@@ -74,7 +74,6 @@ public class MainActivity extends BaseActivity implements MainView {
             Toast.makeText(context, "暂时没做分享", Toast.LENGTH_SHORT).show();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -101,16 +100,21 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void switch2Images() {
+    public void switch2Social() {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new ImageFragment()).commit();
         Log.d("how", "switch2Image: ");
 //        mToolbar.setTitle(R.string.navigation_images);
     }
 
     @Override
-    public void switch2Weather() {
+    public void switch2Friend() {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new WeatherFragment()).commit();
 //        mToolbar.setTitle(R.string.navigation_weather);
+    }
+
+    @Override
+    public void switch2Find() {
+
     }
 
     @Override
@@ -118,4 +122,10 @@ public class MainActivity extends BaseActivity implements MainView {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new AboutFragment()).commit();
         mToolbar.setTitle(R.string.navigation_about);
     }
+
+    @Override
+    public void switch2Setting() {
+
+    }
+
 }

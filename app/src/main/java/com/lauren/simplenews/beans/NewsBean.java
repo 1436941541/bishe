@@ -11,98 +11,86 @@ import java.io.Serializable;
  * 描述：
  */
 public class NewsBean implements Serializable {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
-     * docid
+     * id
+
      */
-    @SerializedName("docid")
-    private String docid;
+    @SerializedName("id")
+    private int id;
     /**
-     * 标题
+     * 第一标题
      */
-    @SerializedName("title")
-    private String title;
+    @SerializedName("firstTitle")
+    private String firstTitle;
     /**
-     * 小内容
+     * 详情网址
      */
-    @SerializedName("digest")
-    private String digest;
+    @SerializedName("newDetailUrl")
+    private String newDetailUrl;
     /**
-     * 图片地址
+     * 第二标题
      */
-    @SerializedName("imgsrc")
-    private String imgsrc;
-    /**
-     * 来源
-     */
-    @SerializedName("source")
-    private String source;
+    @SerializedName("secondTitle")
+    private String secondTitle;
     /**
      * 时间
      */
-    @SerializedName("ptime")
-    private String ptime;
+    @SerializedName("time")
+    private String time;
     /**
-     * TAG
+     * 图片地址
      */
-    @SerializedName("tag")
-    private String tag;
+    @SerializedName("imageUrl")
+    private String imageUrl;
 
-    public boolean hasFadedIn = false;
 
-    public String getDocid() {
-        return docid;
+
+    public String getFirstTitle() {
+        return firstTitle;
     }
 
-    public void setDocid(String docid) {
-        this.docid = docid;
+    public void setFirstTitle(String firstTitle) {
+        this.firstTitle = firstTitle;
     }
 
-    public String getTitle() {
-        return title;
+    public String getSecondTitle() {
+        return secondTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSecondTitle(String secondTitle) {
+        this.secondTitle = secondTitle;
     }
 
-    public String getDigest() {
-        return digest;
+    public String getTime() {
+        return time;
     }
 
-    public void setDigest(String digest) {
-        this.digest = digest;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getImgsrc() {
-        return imgsrc;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImgsrc(String imgsrc) {
-        this.imgsrc = imgsrc;
+    public void setImageUrl(String imgUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getSource() {
-        return source;
+    public String getNewDetailUrl() {
+        return newDetailUrl;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setNewDetailUrl(String newDetailUrl) {
+        this.newDetailUrl = newDetailUrl;
     }
 
-    public String getPtime() {
-        return ptime;
-    }
-
-    public void setPtime(String ptime) {
-        this.ptime = ptime;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
 }
