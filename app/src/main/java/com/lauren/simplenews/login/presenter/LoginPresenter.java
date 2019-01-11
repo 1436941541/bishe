@@ -1,11 +1,13 @@
 package com.lauren.simplenews.login.presenter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import com.lauren.simplenews.commons.SomeConstant;
 import com.lauren.simplenews.login.model.ILoginModel;
 import com.lauren.simplenews.login.model.LoginModel;
+import com.lauren.simplenews.login.view.ForgetPasswordActivity;
 import com.lauren.simplenews.login.view.ILoginActivity;
 import com.lauren.simplenews.login.view.RegisterActivity;
 
@@ -24,11 +26,11 @@ public class LoginPresenter implements ILoginPresenter {
 
     @Override
     public void login(String user,String password) {
-        if (user.length()==0 && password.length()==0){
+        if (user.length() == 0 && password.length() == 0){
             iLoginActivity.showResult(SomeConstant.NONE);
-        } else if (user.length() >= 0 && password.length()==0) {
+        } else if (password.length() == 0) {
             iLoginActivity.showResult(SomeConstant.ONLY_HAVE_USER);
-        }else if (user.length() == 0 && password.length()>=0){
+        }else if (user.length() == 0) {
             iLoginActivity.showResult(SomeConstant.ONLY_HAVE_PASSWORD);
         }else {
             iLoginModel.checkUser(user,password);
@@ -44,5 +46,11 @@ public class LoginPresenter implements ILoginPresenter {
     public void register(Activity activity) {
         Intent intent = new Intent(activity,RegisterActivity.class);
         iLoginActivity.registerActivity(intent);
+    }
+
+    @Override
+    public void forgetPassword(Activity activity) {
+        Intent intent = new Intent(activity,ForgetPasswordActivity.class);
+        iLoginActivity.forgetPasswordActivity(intent);
     }
 }
